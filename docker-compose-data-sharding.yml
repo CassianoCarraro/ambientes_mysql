@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  mysql-ds-node1:
+    build: images/mysql
+    container_name: "mysql-ds-node1"
+    ports:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
+    volumes:
+      - ${DEFAULT_CNF}
+      - ./data/data_sharding_node1:/var/lib/mysql
+  mysql-ds-node2:
+    build: images/mysql
+    container_name: "mysql-ds-node2"
+    ports:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
+    volumes:
+      - ${DEFAULT_CNF}
+      - ./data/data_sharding_node2:/var/lib/mysql
+  mysql-ds-node3:
+    build: images/mysql
+    container_name: "mysql-ds-node3"
+    ports:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
+    volumes:
+      - ${DEFAULT_CNF}
+      - ./data/data_sharding_node3:/var/lib/mysql

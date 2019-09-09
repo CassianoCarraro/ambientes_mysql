@@ -1,0 +1,10 @@
+[mysqld]
+
+default-authentication-plugin = mysql_native_password
+log_timestamps = SYSTEM
+datadir = /var/lib/mysql
+sync_binlog = 0
+binlog_expire_logs_seconds = 3
+slow_query_log = 1
+long_query_time = 5
+binlog_format = ROW

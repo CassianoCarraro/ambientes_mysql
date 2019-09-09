@@ -1,0 +1,23 @@
+[ndbd default]
+NoOfReplicas = 1
+DataMemory = 256M
+IndexMemory = 128M
+
+[ndb_mgmd]
+NodeId = 1
+hostname = mysql-cluster-mgm
+datadir = /var/lib/mysql
+
+[ndbd]
+NodeId = 2
+hostname = mysql-cluster-dn1
+datadir = /var/lib/mysql
+
+[ndbd]
+NodeId = 3
+hostname = mysql-cluster-dn2
+datadir = /var/lib/mysql
+
+[mysqld]
+NodeId = 4
+hostname = mysql-cluster-sv1

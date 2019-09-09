@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  mysql-pf-node1:
+    build: images/mysql
+    container_name: "mysql-pf-node1"
+    ports:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
+    volumes:
+      - ${DEFAULT_CNF}
+      - ./data/particionamento_funcional_node01:/var/lib/mysql
+  mysql-pf-n2:
+    build: images/mysql
+    container_name: "mysql-pf-node2"
+    ports:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
+    volumes:
+      - ${DEFAULT_CNF}
+      - ./data/particionamento_funcional_node02:/var/lib/mysql

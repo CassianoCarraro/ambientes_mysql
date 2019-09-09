@@ -1,0 +1,1 @@
+CHANGE MASTER TO MASTER_HOST='mysql-master', MASTER_USER='replica', MASTER_PASSWORD='bench';
