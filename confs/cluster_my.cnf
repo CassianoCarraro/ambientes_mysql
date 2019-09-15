@@ -3,10 +3,11 @@
 default-authentication-plugin = mysql_native_password
 log_timestamps = SYSTEM
 datadir = /var/lib/mysql
+default_storage_engine=ndbcluster
 
 ndbcluster
-ndb-connectstring = nodeid=1;host=mysql-cluster-mgm:1186
+ndb-connectstring = 172.18.0.2
 user = root
 
 [mysql_cluster]
-ndb-connectstring = nodeid=1;host=mysql-cluster-mgm:1186
+ndb-connectstring = 172.18.0.2

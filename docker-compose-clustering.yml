@@ -1,24 +1,38 @@
 version: "3"
 
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/24
+
 services:
   mysql-cluster-mgm:
     build: images/mysql-cluster
     container_name: "mysql-cluster-mgm"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
-      NODE_TYPE: "management"
     volumes:
       - ./confs/cluster_my.cnf:/etc/my.cnf
       - ./confs/cluster.cnf:/etc/mysql-cluster.cnf
       - ./data/cluster_mgm:/var/lib/mysql
+    networks:
+      default:
+        ipv4_address: 172.18.0.2
+    command: ndb_mgmd
   mysql-cluster-dn1:
     build: images/mysql-cluster
     container_name: "mysql-cluster-dn1"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
-      NODE_TYPE: "data"
     volumes:
+      - ./confs/cluster_my.cnf:/etc/my.cnf
       - ./data/cluster_dn1:/var/lib/mysql
+    networks:
+      default:
+        ipv4_address: 172.18.0.3
+    command: ndbd
     depends_on:
       - mysql-cluster-mgm
   mysql-cluster-dn2:
@@ -26,9 +40,13 @@ services:
     container_name: "mysql-cluster-dn2"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
-      NODE_TYPE: "data"
     volumes:
+      - ./confs/cluster_my.cnf:/etc/my.cnf
       - ./data/cluster_dn2:/var/lib/mysql
+    networks:
+      default:
+        ipv4_address: 172.18.0.4
+    command: ndbd
     depends_on:
       - mysql-cluster-mgm
   mysql-cluster-sv1:
@@ -36,7 +54,24 @@ services:
     container_name: "mysql-cluster-sv1"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
-      NODE_TYPE: "sql"
+    volumes:
+      - ./confs/cluster_my.cnf:/etc/my.cnf
+    networks:
+      default:
+        ipv4_address: 172.18.0.5
+    depends_on:
+      - mysql-cluster-dn1
+      - mysql-cluster-dn2
+  mysql-cluster-sv2:
+    build: images/mysql-cluster
+    container_name: "mysql-cluster-sv2"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
+    volumes:
+      - ./confs/cluster_my.cnf:/etc/my.cnf
+    networks:
+      default:
+        ipv4_address: 172.18.0.6
     depends_on:
       - mysql-cluster-dn1
       - mysql-cluster-dn2
