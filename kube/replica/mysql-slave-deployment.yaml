@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-resolved.yaml -o kube/replica/
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql-slave
+  name: mysql-slave
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mysql-slave
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: bench
+        image: mysql-slave
+        name: mysql-slave
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/mysql/conf.d/default.cnf
+          name: mysql-slave-claim0
+        - mountPath: /etc/mysql/conf.d/replica_slave.cnf
+          name: mysql-slave-claim1
+        - mountPath: /docker-entrypoint-initdb.d/init_slave.sql
+          name: mysql-slave-claim2
+        - mountPath: /var/lib/mysql
+          name: mysql-slave-claim3
+      restartPolicy: Always
+      volumes:
+      - name: mysql-slave-claim0
+        persistentVolumeClaim:
+          claimName: mysql-slave-claim0
+      - name: mysql-slave-claim1
+        persistentVolumeClaim:
+          claimName: mysql-slave-claim1
+      - name: mysql-slave-claim2
+        persistentVolumeClaim:
+          claimName: mysql-slave-claim2
+      - name: mysql-slave-claim3
+        persistentVolumeClaim:
+          claimName: mysql-slave-claim3
+status: {}

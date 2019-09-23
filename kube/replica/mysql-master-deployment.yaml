@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-resolved.yaml -o kube/replica/
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql-master
+  name: mysql-master
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mysql-master
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: bench
+        image: ambientes_mysql_mysql-master:latest
+        imagePullPolicy: IfNotPresent
+        name: mysql-master
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/mysql/conf.d/
+          name: mysql-master-confs
+        - mountPath: /docker-entrypoint-initdb.d/
+          name: mysql-master-init
+      volumes:
+        - name: mysql-master-confs
+          configMap:
+            name: mysql
+            items:
+            - key: default.cnf
+              path: default.cnf
+            - key: replica_master.cnf
+              path: replica_master.cnf
+        - name: mysql-master-init
+          configMap:
+            name: mysql-init-scripts
+            items:
+            - key: init_master.sql
+              path: init_master.sql
+status: {}
