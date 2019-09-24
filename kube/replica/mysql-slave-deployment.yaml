@@ -1,53 +1,50 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose-resolved.yaml -o kube/replica/
-    kompose.version: 1.7.0 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: mysql-slave
-  name: mysql-slave
+    app: mysql-slave
+  name: mysql-slave-deploy
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-slave
   strategy:
     type: Recreate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: mysql-slave
+        app: mysql-slave
     spec:
       containers:
       - env:
         - name: MYSQL_ROOT_PASSWORD
           value: bench
-        image: mysql-slave
+        image: ambientes_mysql_mysql-slave
+        imagePullPolicy: IfNotPresent
         name: mysql-slave
         ports:
         - containerPort: 3306
         resources: {}
         volumeMounts:
-        - mountPath: /etc/mysql/conf.d/default.cnf
-          name: mysql-slave-claim0
-        - mountPath: /etc/mysql/conf.d/replica_slave.cnf
-          name: mysql-slave-claim1
-        - mountPath: /docker-entrypoint-initdb.d/init_slave.sql
-          name: mysql-slave-claim2
-        - mountPath: /var/lib/mysql
-          name: mysql-slave-claim3
-      restartPolicy: Always
+        - mountPath: /etc/mysql/conf.d/
+          name: mysql-slave-confs
+        - mountPath: /docker-entrypoint-initdb.d/
+          name: mysql-slave-init
       volumes:
-      - name: mysql-slave-claim0
-        persistentVolumeClaim:
-          claimName: mysql-slave-claim0
-      - name: mysql-slave-claim1
-        persistentVolumeClaim:
-          claimName: mysql-slave-claim1
-      - name: mysql-slave-claim2
-        persistentVolumeClaim:
-          claimName: mysql-slave-claim2
-      - name: mysql-slave-claim3
-        persistentVolumeClaim:
-          claimName: mysql-slave-claim3
+        - name: mysql-slave-confs
+          configMap:
+            name: mysql
+            items:
+            - key: default.cnf
+              path: default.cnf
+            - key: replica_slave.cnf
+              path: replica_slave.cnf
+        - name: mysql-slave-init
+          configMap:
+            name: mysql-init-scripts
+            items:
+            - key: init_slave.sql
+              path: init_slave.sql
 status: {}

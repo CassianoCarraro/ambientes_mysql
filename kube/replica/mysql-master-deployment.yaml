@@ -1,28 +1,27 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose-resolved.yaml -o kube/replica/
-    kompose.version: 1.7.0 (HEAD)
-  creationTimestamp: null
   labels:
-    io.kompose.service: mysql-master
-  name: mysql-master
+    app: mysql-master
+  name: mysql-master-deploy
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-master
   strategy:
     type: Recreate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: mysql-master
+        app: mysql-master
     spec:
       containers:
       - env:
         - name: MYSQL_ROOT_PASSWORD
           value: bench
-        image: ambientes_mysql_mysql-master:latest
+        image: ambientes_mysql_mysql-master
         imagePullPolicy: IfNotPresent
         name: mysql-master
         ports:
