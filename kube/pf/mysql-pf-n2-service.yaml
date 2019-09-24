@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-slave
+  name: mysql-pf-n2
 spec:
   selector:
-    app: mysql-slave
+    app: mysql-pf-n2
   type: NodePort
   ports:
   - name: "mysql"

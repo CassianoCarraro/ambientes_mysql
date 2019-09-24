@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: mysql-slave
-  name: mysql-slave-deploy
+    app: mysql-pf-n2
+  name: mysql-pf-n2-deploy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql-slave
+      app: mysql-pf-n2
   strategy:
     type: Recreate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: mysql-slave
+        app: mysql-pf-n2
     spec:
       containers:
       - env:
@@ -23,27 +23,17 @@ spec:
           value: bench
         image: ambiente_mysql
         imagePullPolicy: IfNotPresent
-        name: mysql-slave
+        name: mysql-master
         ports:
         - containerPort: 3306
         resources: {}
         volumeMounts:
         - mountPath: /etc/mysql/conf.d/
-          name: mysql-slave-confs
-        - mountPath: /docker-entrypoint-initdb.d/
-          name: mysql-slave-init
+          name: mysql-master-confs
       volumes:
-        - name: mysql-slave-confs
+        - name: mysql-master-confs
           configMap:
             name: mysql
             items:
             - key: default.cnf
               path: default.cnf
-            - key: replica_slave.cnf
-              path: replica_slave.cnf
-        - name: mysql-slave-init
-          configMap:
-            name: mysql-init-scripts
-            items:
-            - key: init_slave.sql
-              path: init_slave.sql

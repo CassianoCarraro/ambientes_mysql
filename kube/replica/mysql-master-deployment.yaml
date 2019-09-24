@@ -21,7 +21,7 @@ spec:
       - env:
         - name: MYSQL_ROOT_PASSWORD
           value: bench
-        image: ambientes_mysql_mysql-master
+        image: ambiente_mysql
         imagePullPolicy: IfNotPresent
         name: mysql-master
         ports:
@@ -47,4 +47,3 @@ spec:
             items:
             - key: init_master.sql
               path: init_master.sql
-status: {}
