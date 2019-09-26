@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mysql-ds-n1
+  name: mysql-ds-n1-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-ds-n1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mysql-ds-n1
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: bench
+        image: ambiente_mysql
+        imagePullPolicy: IfNotPresent
+        name: mysql-master
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/mysql/conf.d/
+          name: mysql-master-confs
+      volumes:
+        - name: mysql-master-confs
+          configMap:
+            name: mysql
+            items:
+            - key: default.cnf
+              path: default.cnf
