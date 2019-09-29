@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: mysql-cluster-mgm
+  name: mysql-cluster-mgm
+spec:
+  containers:
+  - env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: bench
+    image: ambiente_mysql_cluster
+    imagePullPolicy: IfNotPresent
+    name: mysql-cluster-mgm
+    command: ["/entrypoint.sh"]
+    args: ["ndb_mgmd"]
+    ports:
+    - containerPort: 1186
+    volumeMounts:
+    - mountPath: /etc/my.cnf
+      subPath: my.cnf
+      name: mysql-cluster-mgm-my-confs
+    - mountPath: /etc/mysql-cluster.cnf
+      subPath: mysql-cluster.cnf
+      name: mysql-cluster-mgm-cluster-confs
+  volumes:
+    - name: mysql-cluster-mgm-my-confs
+      configMap:
+        name: mysql
+        items:
+        - key: cluster_my.cnf
+          path: my.cnf
+    - name: mysql-cluster-mgm-cluster-confs
+      configMap:
+        name: mysql
+        items:
+        - key: cluster.cnf
+          path: mysql-cluster.cnf

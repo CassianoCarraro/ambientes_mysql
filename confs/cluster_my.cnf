@@ -6,8 +6,8 @@ datadir = /var/lib/mysql
 default_storage_engine=ndbcluster
 
 ndbcluster
-ndb-connectstring = 172.18.0.2
+ndb-connectstring = 172.17.0.4
 user = root
 
 [mysql_cluster]
-ndb-connectstring = 172.18.0.2
+ndb-connectstring = 172.17.0.4
