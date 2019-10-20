@@ -47,3 +47,5 @@ spec:
             items:
             - key: init_slave.sql
               path: init_slave.sql
+      nodeSelector:
+        id: slave1

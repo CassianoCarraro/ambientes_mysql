@@ -47,3 +47,5 @@ spec:
             items:
             - key: init_master.sql
               path: init_master.sql
+      nodeSelector:
+        id: master

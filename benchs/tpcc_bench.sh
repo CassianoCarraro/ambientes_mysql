@@ -7,8 +7,8 @@ SCALE=${5}
 THREADS=${6}
 
 DB='sb'
-USER='test'
-PASS='asdf0000'
+USER='root'
+PASS='bench'
 PREPARE_OUT=~/benchsres/bench_prepare_${NAME}_${SCALE}_$(date +%d%m%H%M
 ).out
 EXECUTE_OUT=~/benchsres/bench_run_${NAME}_${SCALE}_${THREADS}_$(date +%d%m%H%M
