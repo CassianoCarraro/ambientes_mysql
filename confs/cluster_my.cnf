@@ -5,6 +5,10 @@ log_timestamps = SYSTEM
 datadir = /var/lib/mysql
 default_storage_engine=ndbcluster
 
+autocommit = 0
+innodb_buffer_pool_size = 12G
+max_connections = 1000
+
 ndbcluster
 ndb-connectstring = 172.17.0.4
 user = root
