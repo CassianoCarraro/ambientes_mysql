@@ -9,5 +9,9 @@ ndbcluster
 ndb-connectstring = 172.17.0.4
 user = root
 
+autocommit = 0
+innodb_buffer_pool_size = 12G
+max_connections = 1000
+
 [mysql_cluster]
 ndb-connectstring = 172.17.0.4
