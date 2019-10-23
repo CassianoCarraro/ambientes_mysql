@@ -9,7 +9,6 @@ slow_query_log = 1
 long_query_time = 5
 binlog_format = ROW
 
-autocommit = 0
 innodb_flush_log_at_trx_commit = 0
 innodb_buffer_pool_size = 12G
 max_connections = 1000
