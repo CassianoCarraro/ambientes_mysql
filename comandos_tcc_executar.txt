@@ -1,0 +1,64 @@
+comandos a serem executados
+
+--- 10 GB ---
+./bench.sh TPCC prepare localhost 3036 replica 100 8
+
+-- 1 NODO
+-- 2 NODOS
+./bench.sh TPCC run localhost 3036 replica 100 8
+./bench.sh TPCC run localhost 3036 replica 100 16
+./bench.sh TPCC run localhost 3036 replica 100 32
+./bench.sh TPCC run localhost 3036 replica 100 64
+./bench.sh clean localhost 3036
+
+./bench.sh SB prepare localhost 3036 replica 5000000 8
+
+-- 1 NODO
+-- 2 NODOS
+./bench.sh SB run localhost 3036 replica 100 8
+./bench.sh SB run localhost 3036 replica 100 16
+./bench.sh SB run localhost 3036 replica 100 32
+./bench.sh SB run localhost 3036 replica 100 64
+./bench.sh clean localhost 3036
+
+--- 50 GB ---
+./bench.sh TPCC prepare localhost 3036 replica 500 8
+
+-- 1 NODO
+-- 2 NODOS
+./bench.sh TPCC run localhost 3036 replica 500 8
+./bench.sh TPCC run localhost 3036 replica 500 16
+./bench.sh TPCC run localhost 3036 replica 500 32
+./bench.sh TPCC run localhost 3036 replica 500 64
+./bench.sh clean localhost 3036
+
+./bench.sh SB prepare localhost 3036 replica 20000000 8
+
+-- 1 NODO
+-- 2 NODOS
+./bench.sh SB run localhost 3036 replica 500 8
+./bench.sh SB run localhost 3036 replica 500 16
+./bench.sh SB run localhost 3036 replica 500 32
+./bench.sh SB run localhost 3036 replica 500 64
+./bench.sh clean localhost 3036
+
+--- 100 GB ---
+./bench.sh TPCC prepare localhost 3036 replica 1000 8
+
+-- 1 NODO
+-- 2 NODOS
+./bench.sh TPCC run localhost 3036 replica 1000 8
+./bench.sh TPCC run localhost 3036 replica 1000 16
+./bench.sh TPCC run localhost 3036 replica 1000 32
+./bench.sh TPCC run localhost 3036 replica 1000 64
+./bench.sh clean localhost 3036
+
+./bench.sh SB prepare localhost 3036 replica 50000000 8
+
+-- 1 NODO
+-- 2 NODOS
+./bench.sh SB run localhost 3036 replica 1000 8
+./bench.sh SB run localhost 3036 replica 1000 16
+./bench.sh SB run localhost 3036 replica 1000 32
+./bench.sh SB run localhost 3036 replica 1000 64
+./bench.sh clean localhost 3036
