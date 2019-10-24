@@ -8,8 +8,8 @@ SCALE=${6}
 THREADS=${7}
 
 DB='sb'
-USER='test'
-PASS='asdf0000'
+USER='root'
+PASS='bench'
 TPCC_DIR='./tpcc-mysql'
 PREPARE_OUT=~/benchsres/bench_prepare_${BENCH}_${NAME}_${SCALE}_$(date +%d%m%H%M
 ).out
