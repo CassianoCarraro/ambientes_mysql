@@ -36,7 +36,7 @@ then
                 -u${USER} \
                 -p${PASS} \
                 -w${SCALE} &> "$PREPARE_OUT"
-        elif [ $OP == 'SB' ]
+        elif [ $BENCH == 'SB' ]
         then
             sysbench \
             --mysql-host=${HOST} \
@@ -67,9 +67,9 @@ then
                 -p${PASS} \
                 -w${SCALE} \
                 -c${THREADS} \
-                -r${EXECUTE_TIME} \
+                -r10 \
                 -l${EXECUTE_TIME} &> "$EXECUTE_OUT"
-        elif [ $OP == 'SB' ]
+        elif [ $BENCH == 'SB' ]
         then
             sysbench \
             --mysql-host=${HOST} \
