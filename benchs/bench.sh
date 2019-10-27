@@ -21,11 +21,11 @@ EXECUTE_TIME=300
 
 if [ $OP == 'prepare' ];
 then
+        mysql -u${USER} -p${PASS} -h${HOST} -P${PORT} -e "create database if not exists ${DB}"
+        echo "Executando o prepare"
+
         if [ $BENCH == 'TPCC' ];
         then
-            mysql -u${USER} -p${PASS} -h${HOST} -P${PORT} -e "create database if not exists ${DB}"
-            echo "Executando o prepare"
-
             mysql -u${USER} -p${PASS} -h${HOST} -P${PORT} ${DB} < $TPCC_DIR/create_table.sql
             mysql -u${USER} -p${PASS} -h${HOST} -P${PORT} ${DB} < $TPCC_DIR/add_fkey_idx.sql
 
