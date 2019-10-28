@@ -82,6 +82,7 @@ then
             --tables=10 \
             --table-size=${SCALE} \
             --time=${EXECUTE_TIME} \
+            --report-interval=10 \
             oltp_read_only run &> "$EXECUTE_OUT"
         else
             echo "Operação inválida!"

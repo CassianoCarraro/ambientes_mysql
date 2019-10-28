@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mysql-slave2
+  name: mysql-slave2-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-slave2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mysql-slave2
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: bench
+        image: ambiente_mysql
+        imagePullPolicy: IfNotPresent
+        name: mysql-slave2
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/mysql/conf.d/
+          name: mysql-slave-confs
+        - mountPath: /docker-entrypoint-initdb.d/
+          name: mysql-slave-init
+      volumes:
+        - name: mysql-slave-confs
+          configMap:
+            name: mysql
+            items:
+            - key: default.cnf
+              path: default.cnf
+            - key: replica_slave.cnf
+              path: replica_slave.cnf
+        - name: mysql-slave-init
+          configMap:
+            name: mysql-init-scripts
+            items:
+            - key: init_slave.sql
+              path: init_slave.sql
+      nodeSelector:
+        id: slave2
