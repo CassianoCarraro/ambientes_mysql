@@ -39,8 +39,8 @@ spec:
             items:
             - key: default.cnf
               path: default.cnf
-            - key: replica_slave.cnf
-              path: replica_slave.cnf
+            - key: replica_slave2.cnf
+              path: replica_slave2.cnf
         - name: mysql-slave-init
           configMap:
             name: mysql-init-scripts
