@@ -27,3 +27,5 @@ spec:
         items:
         - key: cluster_my.cnf
           path: my.cnf
+  nodeSelector:
+    clst: dn2

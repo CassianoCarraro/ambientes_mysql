@@ -36,3 +36,5 @@ spec:
         items:
         - key: cluster.cnf
           path: mysql-cluster.cnf
+  nodeSelector:
+    clst: mgm
