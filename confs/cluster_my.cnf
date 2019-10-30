@@ -9,8 +9,8 @@ innodb_buffer_pool_size = 4G
 max_connections = 1000
 
 ndbcluster
-ndb-connectstring = 172.17.0.4
+ndb-connectstring = 10.44.0.1
 user = root
 
 [mysql_cluster]
-ndb-connectstring = 172.17.0.4
+ndb-connectstring = 10.44.0.1
