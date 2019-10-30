@@ -13,11 +13,11 @@ hostname = 10.44.0.2
 
 [ndbd]
 NodeId = 3
-hostname = 10.44.0.3
+hostname = 10.47.0.1
 
 [mysqld]
 NodeId = 4
-hostname = 10.44.0.4
+hostname = 10.36.0.1
 
 #[mysqld]
 #NodeId = 5
