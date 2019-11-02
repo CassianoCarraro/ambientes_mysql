@@ -44,11 +44,13 @@ then
                 -w${SCALE} &> "$PREPARE_OUT"
         elif [ $BENCH == 'SB' ]
         then
-            SE='InnoDB'
+            storage_engine='innodb'
+            extra_opt=''
 
-            if [ $NAME == 'cluster*' ];
+            if [[ $NAME == "cluster*" ]];
             then
-                SE='ndbcluster'
+                storage_engine='ndbcluster'
+                extra_opt='--create-table-options="TABLESPACE ts_1 STORAGE DISK"'
             fi
 
             sysbench \
@@ -61,7 +63,8 @@ then
             --threads=4 \
             --tables=10 \
             --table-size=${SCALE} \
-            --mysql-storage-engine=${SE} \
+            --mysql-storage-engine=${storage_engine} \
+            ${extra_opt} \
             oltp_read_only prepare &> "$PREPARE_OUT"
         else
             echo "Operação inválida!"
