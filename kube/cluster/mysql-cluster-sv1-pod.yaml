@@ -29,7 +29,7 @@ spec:
         items:
         - key: cluster_my.cnf
           path: my.cnf
-    - name: mysql-cluster-confs
+    - name: mysql-cluster-init
       configMap:
         name: mysql-init-scripts
         items:
