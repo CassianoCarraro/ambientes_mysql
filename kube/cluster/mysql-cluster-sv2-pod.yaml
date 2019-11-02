@@ -28,4 +28,4 @@ spec:
         - key: cluster_my.cnf
           path: my.cnf
   nodeSelector:
-    clst: master
+    id: master
