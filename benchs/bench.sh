@@ -26,7 +26,13 @@ then
 
         if [ $BENCH == 'TPCC' ];
         then
-            mysql -u${USER} -p${PASS} -h${HOST} -P${PORT} ${DB} < $TPCC_DIR/create_table.sql
+            if [ $NAME == 'cluster*' ];
+            then
+                mysql -u${USER} -p${PASS} -h${HOST} -P${PORT} ${DB} < $TPCC_DIR/create_table_ndb.sql
+            else
+                mysql -u${USER} -p${PASS} -h${HOST} -P${PORT} ${DB} < $TPCC_DIR/create_table.sql
+            fi
+
             mysql -u${USER} -p${PASS} -h${HOST} -P${PORT} ${DB} < $TPCC_DIR/add_fkey_idx.sql
 
             $TPCC_DIR/tpcc_load \
@@ -38,6 +44,13 @@ then
                 -w${SCALE} &> "$PREPARE_OUT"
         elif [ $BENCH == 'SB' ]
         then
+            SE='InnoDB'
+
+            if [ $NAME == 'cluster*' ];
+            then
+                SE='ndbcluster'
+            fi
+
             sysbench \
             --mysql-host=${HOST} \
             --mysql-port=${PORT} \
@@ -48,6 +61,7 @@ then
             --threads=4 \
             --tables=10 \
             --table-size=${SCALE} \
+            --mysql-storage-engine=${SE} \
             oltp_read_only prepare &> "$PREPARE_OUT"
         else
             echo "Operação inválida!"

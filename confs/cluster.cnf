@@ -1,7 +1,10 @@
 [ndbd default]
 NoOfReplicas = 1
-DataMemory = 256M
+DataMemory = 5GB
 datadir = /var/lib/mysql
+LockPagesInMainMemory=1
+TimeBetweenLocalCheckpoints=6
+NoOfFragmentLogFiles=500
 
 [ndb_mgmd]
 NodeId = 1
