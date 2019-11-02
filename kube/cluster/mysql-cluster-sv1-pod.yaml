@@ -31,7 +31,7 @@ spec:
           path: my.cnf
     - name: mysql-cluster-confs
       configMap:
-        name: mysql
+        name: mysql-init-scripts
         items:
         - key: init_cluster.sql
           path: init_cluster.sql
