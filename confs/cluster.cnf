@@ -22,6 +22,6 @@ hostname = 10.47.0.1
 NodeId = 4
 hostname = 10.36.0.1
 
-#[mysqld]
-#NodeId = 5
-#hostname = 10.44.0.5
+[mysqld]
+NodeId = 5
+hostname = 10.44.0.1
