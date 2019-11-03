@@ -37,3 +37,5 @@ spec:
             items:
             - key: default.cnf
               path: default.cnf
+      nodeSelector:
+        id: slave1

@@ -20,6 +20,8 @@ spec:
     - mountPath: /etc/my.cnf
       subPath: my.cnf
       name: mysql-cluster-sv2-my-confs
+    - mountPath: /docker-entrypoint-initdb.d/
+      name: mysql-cluster-init
   volumes:
     - name: mysql-cluster-sv2-my-confs
       configMap:
@@ -27,5 +29,11 @@ spec:
         items:
         - key: cluster_my.cnf
           path: my.cnf
+    - name: mysql-cluster-init
+      configMap:
+        name: mysql-init-scripts
+        items:
+        - key: init_cluster.sql
+          path: init_cluster.sql
   nodeSelector:
     clst: sv1
